@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace DotMath.Core.Numbers
 {
@@ -15,9 +16,23 @@ namespace DotMath.Core.Numbers
             Denominator = denominator;
         }
 
+        private Fraction(string src)
+        {
+            if (src.Count(_ => _ == '/') == 1)
+            {
+                var splitted = src.Split('/');
+                Numerator = int.Parse(splitted[0].Trim());
+                Denominator = int.Parse(splitted[1].Trim());
+            }
+            else
+            {
+                throw new FormatException($"The format of the input string '{src}' is incorrect.");
+            }
+        }
+
         public Integer Numerator { get; }
         public Integer Denominator { get; }
-        public override float Value => (int)Numerator / (int)Denominator;
+        public override float Value => Numerator.Value / Denominator.Value;
 
         public override bool Equals(object obj)
         {
@@ -39,6 +54,12 @@ namespace DotMath.Core.Numbers
 
         public override string ToString() => Denominator == 0 || Denominator == 1 ? Numerator.ToString() : $"{Numerator}/{Denominator}";
 
+        public override string ToLaTex() => Denominator == 0 || Denominator == 1 ? Numerator.ToString() : $"\\frac{{{Numerator}}}{{{Denominator}}}";
+
+        /// <summary>
+        /// Transforms the current fraction into its simplest form.
+        /// </summary>
+        /// <returns>The simplified fraction.</returns>
         public Fraction Simplify()
         {
             var gcd = MathUtils.GCD(Numerator, Denominator);
@@ -52,9 +73,9 @@ namespace DotMath.Core.Numbers
 
         public static implicit operator Fraction(Integer i) => new Fraction(i, 1);
 
-        public static implicit operator Fraction(int i) => new Fraction(i, 1); 
+        public static implicit operator Fraction(int i) => new Fraction(i, 1);
 
-        public static Fraction operator + (Fraction a, Fraction b)
+        public static Fraction operator +(Fraction a, Fraction b)
         {
             var lcm = MathUtils.LCM(a.Denominator, b.Denominator);
             var fa = lcm / a.Denominator;
@@ -62,7 +83,7 @@ namespace DotMath.Core.Numbers
             return new Fraction(a.Numerator * fa + b.Numerator * fb, lcm).Simplify();
         }
 
-        public static Fraction operator - (Fraction a, Fraction b)
+        public static Fraction operator -(Fraction a, Fraction b)
         {
             var lcm = MathUtils.LCM(a.Denominator, b.Denominator);
             var fa = lcm / a.Denominator;
@@ -70,8 +91,8 @@ namespace DotMath.Core.Numbers
             return new Fraction(a.Numerator * fa - b.Numerator * fb, lcm).Simplify();
         }
 
-        public static Fraction operator * (Fraction a, Fraction b) => new Fraction(a.Numerator * b.Numerator, a.Denominator * b.Denominator).Simplify();
+        public static Fraction operator *(Fraction a, Fraction b) => new Fraction(a.Numerator * b.Numerator, a.Denominator * b.Denominator).Simplify();
 
-        public static Fraction operator / (Fraction a, Fraction b) => new Fraction(a.Numerator * b.Denominator, a.Denominator * b.Numerator).Simplify();
+        public static Fraction operator /(Fraction a, Fraction b) => new Fraction(a.Numerator * b.Denominator, a.Denominator * b.Numerator).Simplify();
     }
 }

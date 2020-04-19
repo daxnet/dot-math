@@ -29,22 +29,30 @@ namespace DotMath.Core.Numbers
 
         public static implicit operator Integer(int value) => new Integer(value);
 
-        public static implicit operator int(Integer integer) => (int)integer.Value;
+        public static implicit operator int(Integer integer) => (int) integer.Value;
 
-        public static Integer operator + (Integer a, Integer b) => a.IntValue + b.IntValue;
+        public static Integer operator +(Integer a, Integer b) => a.IntValue + b.IntValue;
 
-        public static Integer operator - (Integer a, Integer b) => a.IntValue - b.IntValue;
+        public static Integer operator -(Integer a, Integer b) => a.IntValue - b.IntValue;
 
-        public static Integer operator * (Integer a, Integer b) => a.IntValue * b.IntValue;
+        public static Integer operator *(Integer a, Integer b) => a.IntValue * b.IntValue;
 
-        public static Integer operator / (Integer a, Integer b) => a.IntValue / b.IntValue;
+        public static Integer operator /(Integer a, Integer b) => a.IntValue / b.IntValue;
 
         public static Integer operator ^(Integer a, Integer b) => a.IntValue ^ b.IntValue;
 
-        public static Integer operator % (Integer a, Integer b) => a.IntValue % b.IntValue;
+        public static Integer operator %(Integer a, Integer b) => a.IntValue % b.IntValue;
 
-        public static bool operator == (Integer a, Integer b) => Equals(a, b);
+        public static bool operator ==(Integer a, Integer b) => Equals(a, b);
 
-        public static bool operator != (Integer a, Integer b) => !Equals(a, b);
+        public static bool operator !=(Integer a, Integer b) => !Equals(a, b);
+
+        public static bool operator >(Integer a, Integer b) => a.IntValue > b.IntValue;
+
+        public static bool operator <(Integer a, Integer b) => a.IntValue < b.IntValue;
+
+        public static bool operator >=(Integer a, Integer b) => a.IntValue >= b.IntValue;
+
+        public static bool operator <=(Integer a, Integer b) => a.IntValue <= b.IntValue;
     }
 }
