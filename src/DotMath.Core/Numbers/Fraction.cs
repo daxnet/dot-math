@@ -2,7 +2,7 @@ using System;
 
 namespace DotMath.Core.Numbers
 {
-    public class Fraction : Number<float>
+    public class Fraction : Number
     {
         public Fraction(Integer numerator, Integer denominator)
         {
@@ -17,7 +17,7 @@ namespace DotMath.Core.Numbers
 
         public Integer Numerator { get; }
         public Integer Denominator { get; }
-        public override float Value => (float) Numerator / (float) Denominator;
+        public override float Value => (int)Numerator / (int)Denominator;
 
         public override bool Equals(object obj)
         {

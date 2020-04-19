@@ -1,6 +1,7 @@
 ﻿using System;
 using DotMath.Core;
 using DotMath.Core.Numbers;
+using DotMath.Core.Polynomials;
 
 namespace ConsoleApp
 {
@@ -8,13 +9,8 @@ namespace ConsoleApp
     {
         static void Main(string[] args)
         {
-            var a = new Integer(2);
-            var b = new Integer(8);
-            var c = MathUtils.GCD(a, b);
-
-            var p = new Fraction(1, 2);
-            var q = new Fraction(4, 3);
-            Console.WriteLine($"{p} / {q} = {p / q}");
+            var term = Term.Parse("2x^3");
+            var term2 = Term.Parse(term.ToString());
         }
     }
 }
