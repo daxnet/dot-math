@@ -6,8 +6,9 @@ using DotMath.Core.Numbers;
 
 namespace DotMath.Core.Polynomials
 {
-    public class Term : IEvaluable, IMathElement
+    public sealed class Term : IEvaluable, IMathElement
     {
+
         #region Private Fields
 
         private readonly List<VariableComponent> variableComponents = new List<VariableComponent>();
@@ -135,6 +136,47 @@ namespace DotMath.Core.Polynomials
             return new Term(coefficient, variableComponents);
         }
 
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj == null)
+            {
+                return false;
+            }
+
+            if (obj is Term t)
+            {
+                if (Coefficient != t.Coefficient || variableComponents.Count != t.variableComponents.Count)
+                {
+                    return false;
+                }
+
+                foreach(var vc in variableComponents)
+                {
+                    if (!t.variableComponents.Contains(vc))
+                    {
+                        return false;
+                    }
+                }
+
+                foreach (var vc in t.variableComponents)
+                {
+                    if (!variableComponents.Contains(vc))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
         public Number Evaluate(IEnumerable<KeyValuePair<char, Number>> variableParameters)
         {
             var result = Coefficient.Value;
@@ -146,8 +188,14 @@ namespace DotMath.Core.Polynomials
             return result;
         }
 
+        public override int GetHashCode() => Coefficient.GetHashCode() ^ variableComponents.GetHashCode();
+
         public string ToLaTex() => ToString();
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -157,6 +205,7 @@ namespace DotMath.Core.Polynomials
             {
                 sb.Append(m ? $"({vc.Symbol}^{vc.Exponent})" : $"{vc.Symbol}:{vc.Exponent}");
             }
+
             return sb.ToString();
         }
 

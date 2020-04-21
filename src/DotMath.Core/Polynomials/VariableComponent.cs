@@ -49,6 +49,30 @@ namespace DotMath.Core.Polynomials
             }
         }
 
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+
+            if (obj == null)
+            {
+                return false;
+            }
+
+            return obj is VariableComponent vc && Symbol == vc.Symbol && Exponent == vc.Exponent;
+        }
+
+        public override int GetHashCode()
+        {
+            return Symbol.GetHashCode() ^ Exponent.GetHashCode();
+        }
+
+        public static bool operator ==(VariableComponent a, VariableComponent b) => Equals(a, b);
+
+        public static bool operator !=(VariableComponent a, VariableComponent b) => !Equals(a, b);
+
         public override string ToString() => $"{Symbol}^{Exponent}";
     }
 }

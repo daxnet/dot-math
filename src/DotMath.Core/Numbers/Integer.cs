@@ -1,3 +1,5 @@
+using System;
+
 namespace DotMath.Core.Numbers
 {
     public class Integer : Number
@@ -39,7 +41,7 @@ namespace DotMath.Core.Numbers
 
         public static Integer operator /(Integer a, Integer b) => a.IntValue / b.IntValue;
 
-        public static Integer operator ^(Integer a, Integer b) => a.IntValue ^ b.IntValue;
+        public static Integer operator ^(Integer a, Integer b) => (int)Math.Pow(a.IntValue, b.IntValue);
 
         public static Integer operator %(Integer a, Integer b) => a.IntValue % b.IntValue;
 
